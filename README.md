@@ -2,7 +2,7 @@
 manuscript material for the Tracking-selection paper
 
 ### How to compile
-`make``
+`make`
 
 ### Clean-up intermediate files
 `make clean`
