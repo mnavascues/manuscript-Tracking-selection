@@ -1,0 +1,15 @@
+all: supplement.pdf
+
+supplement.pdf: supplement.tex references.bib
+	xelatex supplement.tex
+	bibtex supplement
+	xelatex supplement.tex
+	xelatex supplement.tex
+
+clean:
+	#rm -f *.pdf
+	rm -f *.log *.dvi *.aux
+	rm -f *.blg *.bbl
+	rm -f *.log
+	#rm -f *.eps *.[1-9]
+	#rm -f src/*.mpx *.mpx

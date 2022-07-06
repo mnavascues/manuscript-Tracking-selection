@@ -1,5 +1,5 @@
 # manuscript-Tracking-selection
-manuscript material for the Tracking-selection paper
+Material for the Tracking-selection paper
 
 ### How to compile
 `make`
