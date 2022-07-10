@@ -73,11 +73,12 @@
 
 \newpage
 
+% Supplementary Table 1 - Symbols
 \section*{S1 Supplementary Table}
 
 \begin{table}[ht]
  \caption{\textbf{Notation.}}
-  \centering
+  %\centering
   \label{table:tableS1}
   \begin{tabular}{ll}
    \cmidrule(r){1-2}
@@ -156,21 +157,72 @@ Figure~\ref{fig:supple_oob_demo} also presents the distribution OOB estimates wi
 
 Figure~\ref{fig:supple_pods_varplots_sel} and Figure~\ref{fig:supple_pods_varplots_demo} show the variable importance plots (VIP) of each ABC-RF that were grown to infer the parameters of our ABC-RF framework. In a nutshell, the VIP shows how many times a summary statistics was selected by the RF during the training phase. Consequently, the VIP shows the relative importance of each summary statistics for the training of that parameter (more details in the main text). For the latent variables that account for the selection and drift dynamics, the top summary statistics were those calculated from the genome-wide distribution of locus-specific summary statistics that reflect their genome-wide distribution - variance, mean, skewness, kurtosis and quantiles. For example, for the latent variables $P$ and $\bar{s}$, RF used more frequently summary statistics informative about the distribution of locus-specific heterozygosity calculated globally and calculated for the second sample, and summary statistics that inform about the distribution of genome-wide intra-locus $F_{\mathrm{ST}}$. For $L$ summary statistics informative about the genetic divergence between samples: $F_{\mathrm{ST}}$, Da and Dj were more frequently selected. 
 
+To test the robustness of our ABC-RF based framework, we applied the trained RFs on PODs with across-genome varying recombination rates. The scatterplots showed a similar dispersion pattern as the OOB plots when the true values were plotted against the estimated values (Figure~\ref{fig:supple_pods_variable_recomb}). Quantitatively, these PODs presented similar behavior regarding the MSE and $R^2$ estimates (Figure~\ref{fig:supple_pods_variable_recomb}, and Table~\ref{tab:supple_neutral_mse}).
+
 \subsection*{S3.3 Analysis of temporal genomic data of feral populations of \textit{Apis mellifera}}
+
+Before we trained the RF for the analysis of feral bee populations, we checked if our model would fit the data, as an indication of if the model was able to capture most of the features of the observed genomic data. To do that, for each population reference table containing only the summary statistics from the simulated data, we run a principal component analysis (PCA). We also run a PCA on the observed (or targeted) dataset summary statistics and projected its principal components on the PC computed with simulated data. The model mostly capture features of the data, however some PCs showed the observed data point (in black) far from the simulated data cloud of points (in grey), indicating some model inadequacies possibly due to the fact that we did not include gene flow and/or admixture in our simulations (Figure~\ref{fig:supple_model_check_avalon}, Figure~\ref{fig:supple_model_check_humboldt}, Figure~\ref{fig:supple_model_check_davis}, Figure~\ref{fig:supple_model_check_stanislaus}, Figure~\ref{fig:supple_model_check_stebbins}, Figure~\ref{fig:supple_model_check_riverside}, Figure~\ref{fig:supple_model_check_placerita}). 
 
 Figure~\ref{fig:supple_feralbee_thetab}, Figure~\ref{fig:supple_feralbee_N}, and Figure~\ref{fig:supple_feralbee_NE} show the distribution of the true and the OOB estimated values for the parameters used in this work for the joint inference of demography and selection for temporal pairs of populations of feral \textit{A. mellifera}. The OOB MSE and $R^2$ estimates showed that even with fewer simulations for model training, the RF grew for the  \textit{A. mellifera} data had comparable performance to the RF grew for the simulated data.
 
-The performance of the model parameters and additional latent variables for all temporal pairs of this dataset also were similar to the simulations used for the framework evaluation. Figure~\ref{fig:supple_feralbee_prpb}, Figure~\ref{fig:supple_feralbee_pstrong}, Figure~\ref{fig:supple_feralbee_gammamean}, Figure~\ref{fig:supple_feralbee_gammaselmean}, and Figure~\ref{fig:supple_feralbee_load} show the parameters and latent variables informative about the adaptive history. Figure~\ref{fig:supple_feralbee_mu}, Figure~\ref{fig:supple_feralbee_r}, and Figure~\ref{fig:supple_feralbee_nen} show the model parameters and an additional latent variable complementary to the mutation load for the inference of the selection impact on demography.
+The performance of the model parameters and additional latent variables for all temporal pairs of this dataset also were similar to the simulations used for the framework evaluation. Figure~\ref{fig:supple_feralbee_prpb}, Figure~\ref{fig:supple_feralbee_pstrong}, Figure~\ref{fig:supple_feralbee_gammamean}, Figure~\ref{fig:supple_feralbee_gammaselmean}, and Figure~\ref{fig:supple_feralbee_load} show the parameters and latent variables informative about the adaptive history. Figure~\ref{fig:supple_feralbee_mu}, Figure~\ref{fig:supple_feralbee_r}, and Figure~\ref{fig:supple_feralbee_nen} show the model parameters and an additional latent variable complementary to the mutation load for the inference of the selection impact on demography. For comparison purposes, we also included the scatterplots of true $N_{\mathrm{e}}$ against the $F_{\mathrm{ST}}$-NE computed on the global $F_{\mathrm{ST}}$ of simulated data for all feral bee populations (Figure~\ref{fig:supple_feralbee_fstne}.
+
+Table~\ref{tab:supple_neutral_mse} contains MSE and bias for $P$, $\bar{s}$, and $L$ from neutral simulations. For training simulations (for model proof of concept and analysis of the feral bee populations), we first removed neutral simulations for these parameters (where values were zero) before RF training. Then each trained RF was used to make predictions on these neutral simulations. The MSE and bias correspond to the difference between the true values (zeros) and the predicted values in the original scale. For simulations used to test the robustness of our framework when there are varying rates of recombination, we calculated MSE and $R^2$ for non-neutral PODs (Figure~\ref{supple_pods_variable_recomb}), and  MSE and bias for neutral PODs
 
 Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each parameter for each \textit{A. mellifera} population. The last row shows the $F_{\mathrm{ST}}$-NE estimates for comparison. Figure~\ref{fig:supple_feralbee_densityselection} and Figure~\ref{fig:supple_feralbee_densitydemo} show the prior and posterior distributions of all remaining model parameters and latent variables calculated for the temporal samples analyzed with ABC-RF framework.\\
 
-% Table Supplementary  2 - Posterior estimates parameter/population.
+% Supplementary Table 2 - MSE and BIAS for neutral/near-neutral simulations
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[ht]
+\caption{\textbf{Neutral simulations' MSE and Bias.}}
+\centering
+%\label{table:tableS2}
+\begin{tabular}{clll}
+\hline
+\multicolumn{1}{l}{Parameter}            & Dataset            & MSE   & Bias  \\ 
+\hline
+\multirow{9}{*}{$P$}                            & Training           & 0.001  & 0.014  \\
+                                                           & PODs recombination & 0.001 & 0.013 \\
+                                                           & Avalon             &  0     & 0.007 \\
+                                                           & Humboldt        & 0      & 0.009  \\
+                                                           & Davis               & 0      & 0.009  \\
+                                                           & Stanislaus       & 0       & 0.010 \\
+                                                           & Stebbins          & 0      & 0.013  \\
+                                                           & Riverside         & 0      & 0.013  \\
+                                                           & Placerita          &  0     & 0.013  \\ 
+\hline
+\multirow{9}{*}{$\bar{s}$}                    & Training           & 0.262  & 0.401 \\
+                                                           & PODs recombination & 0.241 & 0.386 \\
+                                                           & Avalon             & 0.238           & 0.410 \\
+                                                           & Humboldt           & 0.318 &0.471 \\
+                                                           & Davis              & 0.305 & 0.467 \\
+                                                           & Stanislaus         & 0.315 & 0.479 \\
+                                                           & Stebbins           & 0.373 & 0.533\\
+                                                           & Riverside          & 0.368 & 0.540\\
+                                                           & Placerita          & 0.379 & 0.542\\ 
+\hline
+\multirow{9}{*}{$L$}                            & Training           & 0.014  & 0.089 \\
+                                                           & PODs recombination & 0.013 & 0.088 \\
+                                                           & Avalon             & 0.011 & 0.031 \\
+                                                           & Humboldt        & 0.006 & 0.024\\
+                                                           & Davis              & 0.010 & 0.034\\
+                                                           & Stanislaus       & 0.007 & 0.032\\
+                                                           & Stebbins          & 0.008 & 0.033 \\
+                                                           & Riverside         & 0.011 & 0.046\\
+                                                           & Placerita          & 0.008 & 0.034\\ 
+\hline
+\end{tabular}
+\label{tab:supple_neutral_mse}
+\end{table}
+
+% Supplementary Table  3 - Posterior estimates parameter/population.
  \begin{sidewaystable}[!ht]
  \begin{small}
  \caption{\textbf{\small Parameter posterior median and 95\% credibility interval (in parenthesis) for each  \textit{A. mellifera} feral population.}}
  \end{small}
    \begin{tiny}
-    \centering
+    %\centering
     \begin{tabular}{cccccccc}
     \cmidrule(r){1-8}
         Parameter & Avalon & Humboldt & Davis & Stanislaus & Stebbins & Riverside & Placerita \\
@@ -207,8 +259,6 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \end{tiny}
 \end{sidewaystable}
 
-
-
 \newpage
 \bibliographystyle{apalike}
 \bibliography{references}
@@ -228,7 +278,7 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=1\textwidth]{Figures/FigureS2_oob_plots_selection.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of model parameters informative about the number of beneficial mutations and their strength, the latent variables associated with these two parameters, and variables informative about the adaptive dynamic.} (a) probability of a beneficial mutation to arise $P_RP_B$; (b) number of mutations under strong selection $P$; (c)  mean of the gamma distribution $\gamma$; (d) mean of selection coefficients of mutations under strong selection $\bar{s}$; and (e) mean substitution load $L$. The barplots on the left side of the scatterplots of $P$, $\bar{s}$, and $L$ correspond to the posterior estimates obtained for the simulations removed for the training of these parameters, as these simulations had zero as true values. MSE and $R^2$ estimates of b, d, and e corresponded to non-neutral PODs. See Table S2, Supplementary results, for MSE and $R^2$ estimates for neutral PODs.}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of model parameters informative about the number of beneficial mutations and their strength, the latent variables associated with these two parameters, and variables informative about the adaptive dynamic.} (a) probability of a beneficial mutation to arise $P_RP_B$; (b) number of mutations under strong selection $P$; (c)  mean of the gamma distribution $\gamma$; (d) mean of selection coefficients of mutations under strong selection $\bar{s}$; and (e) mean substitution load $L$. The barplots on the left side of the scatterplots of $P$, $\bar{s}$, and $L$ correspond to the posterior estimates obtained for the simulations removed for the training of these parameters, as these simulations had zero as true values. MSE and $R^2$ estimates of b, d, and e corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_oob_sel}
 \end{figure}
 
@@ -259,7 +309,7 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS6_posterior_plots_recombination.pdf}
-  \small\caption{\textbf{Expected versus posterior estimates plots for PODs with variable genome-wide recombination rates.} (a) mutation rate per generation $\mu$, (b) per base recombination rate per generation $r$, (c) the population size $N$, (d) the effective population size $N_{\mathrm{e}}$, (e) the ratio between the effective size and the population census size $N_{\mathrm{e}}/N$, (f) The probability of beneficial mutation $P_RP_B$, (g) the proportion of strongly selected mutations $P$, (h) mean of the gamma distribution $\gamma$, (i) average selection coefficients of mutations under strong selection $\bar{s}$, (j) the scale mutation rate of selected mutations $\theta_{\mathrm{b}}$, and (k) the average substitution load $L$. MSE and $R^2$ estimates of g, i and k corresponded to non-neutral PODs. See Table S2, Supplementary results, for MSE and $R^2$ estimates for neutral PODs.}
+  \small\caption{\textbf{Expected versus posterior estimates plots for PODs with variable genome-wide recombination rates.} (a) $\theta_{\mathrm{b}}$, (b) $N$, (c) $N_{\mathrm{e}}$, (d) $F_{\mathrm{ST}}-N_{\mathrm{e}}$, (e) $P_RP_B$, (f) $P$, (g) $\gamma$, (h) $\bar{s}$, (i) $L$, (j) $\mu$, (k) $r$, and (l) $N_{\mathrm{e}}/N$. MSE and $R^2$ estimates of f, h and i corresponded to non-neutral PODs. See Table S2, Supplementary results, for neutral PODs MSE and bias.}
   \label{fig:supple_pods_variable_recomb}
 \end{figure}
 
@@ -267,49 +317,49 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS7_model_check_Avalon.pdf}
-  \small\caption{\textbf{Prior evaluation for the Avalon population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Avalon population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_avalon}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS8_model_check_Humboldt.pdf}
-  \small\caption{\textbf{Prior evaluation for the Humboldt population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Humboldt population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_humboldt}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS9_model_check_Davis.pdf}
-  \small\caption{\textbf{Prior evaluation for the Davis population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Davis population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_davis}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS10_model_check_Stanislaus.pdf}
-  \small\caption{\textbf{Prior evaluation for the Stanislaus population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Stanislaus population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_stanislaus}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS11_model_check_Stebbins.pdf}
-  \small\caption{\textbf{Prior evaluation for the Stebbins population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Stebbins population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_stebbins}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS12_model_check_Riverside.pdf}
-  \small\caption{\textbf{Prior evaluation for the Riverside population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Riverside population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_riverside}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS13_model_check_Placerita.pdf}
-  \small\caption{\textbf{Prior evaluation for the Placerita population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) If the model captured most of the targeted data features.}
+  \small\caption{\textbf{Prior evaluation for the Placerita population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_placerita}
 \end{figure}
 
@@ -348,7 +398,7 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS18_combined_plot_pstrong.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the proportion of strongly selected mutations $P$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $P = 0$. MSE and $R^2$ estimates corresponded to non-neutral PODs. See Table S2, Supplementary results, for MSE and $R^2$ estimates for neutral PODs.}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the proportion of strongly selected mutations $P$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $P = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_feralbee_pstrong}
 \end{figure}
 
@@ -362,14 +412,14 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS20_combined_plot_gammasel.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the average selection coefficients of mutations under strong selection $\bar{s}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $\bar{s} = 0$. MSE and $R^2$ estimates corresponded to non-neutral PODs. See Table S2, Supplementary results, for MSE and $R^2$ estimates for neutral PODs.}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the average selection coefficients of mutations under strong selection $\bar{s}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $\bar{s} = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_feralbee_gammaselmean}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.95\textwidth]{Figures/FigureS21_combined_plot_load.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the mean substitution load $L$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $L = 0$. MSE and $R^2$ estimates corresponded to non-neutral PODs. See Table S2, Supplementary results, for MSE and $R^2$ estimates for neutral PODs.}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the mean substitution load $L$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $L = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_feralbee_load}
 \end{figure}
 

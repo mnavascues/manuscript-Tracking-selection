@@ -68,7 +68,7 @@ for (i in seq(perf_table$pop))
 {
   # MSE
   temp <- data.frame(x=list.zero.popstrongmsel[[i]], 
-                     y=inv.logit(list.posterior.zero.popstrongmsel[[i]]$med))
+                     y=inv.logit(list.posterior.zero.popstrongmsel[[i]]$expectation))
   
   perf_table[i,4] <- mse.fun(data = temp)
   # BIAS
@@ -84,7 +84,7 @@ rm(list.reg.logitpopstrongmsel)
 
 # Export LOAD performance table
 #write.csv(perf_table,
-#          file = "results/pipeline_v6_bees/random_forests/performance_pstrong.txt", row.names = F, quote = F)
+#          file = "results/pipeline_v6_bees/random_forests/perf_table//performance_pstrong.txt", row.names = F, quote = F)
 
 ## AVALON
 my_breaks_1 <- c(54.598150, 7.389056, 1)

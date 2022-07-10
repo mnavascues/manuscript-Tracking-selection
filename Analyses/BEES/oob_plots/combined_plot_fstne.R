@@ -13,7 +13,7 @@ library(ggpubr)
 source("src/Analyses/BEES/fun.R")
 
 ##### Load the list with data sets containing true vs FST-NE estimated NEs
-load(file=paste0("~/My_repositories/Tracking-selection/results/pipeline_v6_bees/random_forests/list_table_fstNe2",".RData"))
+load(file=paste0("~/My_repositories/Tracking-selection/results/pipeline_v6_bees/random_forests/list_table/list_table_fstNe2",".RData"))
 
 # FST-NE simulated vs estimated MSE, Rsquared in a table (for a supplementary table)
 perf_table <- data.frame(pop = c("Ava", "Hum", "Dav", "Sta", "Ste", "Riv", "Pla"),
@@ -43,7 +43,7 @@ print(perf_table)
 
 # Export FST-NE performance table
 #write.csv(perf_table,
-#          file = "results/pipeline_v6_bees/random_forests/performance_fstNE2.txt", row.names = F, quote = F)
+#          file = "results/pipeline_v6_bees/random_forests/perf_table/performance_fstNE2.txt", row.names = F, quote = F)
 
 ## AVALON POPULATION
 my_breaks_1 <- c(54.598150, 7.389056, 1)
@@ -233,26 +233,3 @@ ggsave("results/pipeline_v6_bees/random_forests/oob_plots/combined_plot_fstNE.pd
        device="pdf",
        width=9,
        height=12)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

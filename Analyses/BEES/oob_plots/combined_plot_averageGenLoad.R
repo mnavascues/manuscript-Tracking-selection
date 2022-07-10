@@ -45,7 +45,7 @@ source("src/Analyses/BEES/fun.R")
 #
 #save(list.table.oob.load, 
 #    file = paste0("~/My_repositories/Tracking-selection/results/pipeline_v6_bees/random_forests/list_table_oob_load",".RData"))
-#load(file=paste0("~/My_repositories/Tracking-selection/results/pipeline_v6_bees/random_forests/list_table_oob_load",".RData"))
+load(file=paste0("~/My_repositories/Tracking-selection/results/pipeline_v6_bees/random_forests/list_table/list_table_oob_load",".RData"))
 
 perf_table <- data.frame(pop = c("Ava", "Hum", "Dav", "Sta", "Ste", "Riv", "Pla"),
                          mse = NA,
@@ -68,7 +68,7 @@ for (i in seq(perf_table$pop))
 {
   # MSE
   temp <- data.frame(x=list.zero.averageGenLoad[[i]], 
-                     y=inv.logit(list.posterior.zero.averageGenLoad[[i]]$med))
+                     y=inv.logit(list.posterior.zero.averageGenLoad[[i]]$expectation))
   
   perf_table[i,4] <- mse.fun(data = temp)
   # BIAS
@@ -84,7 +84,7 @@ rm(list.reg.averageGenLoad)
 
 # Export LOAD performance table
 #write.csv(perf_table,
-#          file = "results/pipeline_v6_bees/random_forests/performance_load.txt", row.names = F, quote = F)
+#          file = "results/pipeline_v6_bees/random_forests/perf_table/performance_load.txt", row.names = F, quote = F)
 
 
 ## AVALON

@@ -106,7 +106,7 @@ mse.fun <- function(data)
   y = data$y
   
   # Root mean squared error
-  mse <- sqrt(mean((y - x)^2, na.rm = TRUE)) 
+  mse <- mean((y - x)^2, na.rm = TRUE) 
   
   return(mse)
 } # end of function

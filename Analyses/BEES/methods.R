@@ -19,6 +19,7 @@ pop_names <- c("Avalon", "Humboldt", "Davis", "Stanislaus", "Stebbins", "Riversi
 
 # 1. Export the Feral Bee data set observed reference table.
 library(data.table)
+source("src/Analyses/BEES/fun.R")
 
 # Load list with observed reference table
 load(file=paste0("~/My_repositories/Tracking-selection/data/ApisMellifera/globalStats_reftable/list_ObsSumStats",".RData"))
@@ -56,8 +57,6 @@ write.csv(table_ObsSumStats,
 # 2. PCA of simulated and observed for model goodness-of-fit.
 load(file=paste0("~/My_repositories/Tracking-selection/results/pipeline_v6_bees/list_global_SumStats4Training",".RData"))
 ls()
-
-source("src/analysis/supplementary_material_fun.R")
 
 # Model check for Avalon population
 cp_Ava <- modelCheckPCA(simSumStats = list.global.SumStats4Training[[1]],

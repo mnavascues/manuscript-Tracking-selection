@@ -7,9 +7,8 @@ tracking_selection_manuscript.pdf: tracking_selection_manuscript.tex references.
 	xelatex tracking_selection_manuscript.tex
 
 clean:
-	#rm -f *.pdf
+	rm -f *.pdf
 	rm -f *.log *.dvi *.aux
 	rm -f *.blg *.bbl
 	rm -f *.log
-	#rm -f *.eps *.[1-9]
-	#rm -f src/*.mpx *.mpx
+	rm -f *.out
