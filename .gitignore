@@ -12,3 +12,5 @@ Supplement/supplement.log
 Supplement/supplement.out
 Supplement/supplement.synctex.gz
 Supplement/Tables/TableS3.ods
+.DS_Store
+*.DS_Store

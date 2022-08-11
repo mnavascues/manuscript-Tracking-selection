@@ -154,9 +154,7 @@ We set SLiM to output genotypic data of samples of individuals as single nucleot
 
 \subsection*{ABC-RF}
 
-In this work, we take advantage of the use of Random Forests (RF) in ABC procedure, where the parameter estimation is a machine learning problem \citep{Pudlo:2016il, Raynal:2019jj}.
-
-The performance of this approach, was evaluated through simulations. First, we assumed a target dataset consisting of two samples of 100 individuals sampled ten generations appart from the same population. A reference table for that target data was produced by simulating the whole-genome SNPs of diploid individuals using the model described above and calculating the previous summary statistics. At each simulations, we sampled 100 individuals at each time point and recorded their genotypes. Only polymorphic SNPs were retained for each sample. In each simulation, each individual had a genome size of 100 Mbp divided into 2,000 fragments of 50,000 bps. A number of these fragments were randomly set as either neutral or non-neutral, based on the probability $P_{\mathrm{R}}$. For all model parameters, values of each simulation were sampled from a log-uniform distribution with range: 1 to 2,000 for $N_\mathrm{0}$ and $N$, $10^{-10}$ to $10^{-6}$ for $\mu$, $5\times 10^{-10}$ to $5\times 10^{-7}$ for $r$, $10^{-5}$ to 1 for $P_{\mathrm{B}}$, and $10^{-3}$ to 1 for $\gamma$. Furthermore, uniform distribution with range 0 to 1 for $P_{\mathrm{R}}$ (Figure~S1 shows the prior distribution for all model parameters and latent values).
+In this work, we take advantage of the use of Random Forests (RF) in ABC procedure, where the parameter estimation is a machine learning problem \citep{Pudlo:2016il, Raynal:2019jj}. The performance of this approach, was evaluated through simulations. First, we assumed a target dataset consisting of two samples of 100 individuals sampled ten generations appart from the same population. A reference table for that target data was produced by simulating the whole-genome SNPs of diploid individuals using the model described above and calculating the previous summary statistics. At each simulations, we sampled 100 individuals at each time point and recorded their genotypes. Only polymorphic SNPs were retained for each sample. In each simulation, each individual had a genome size of 100 Mbp divided into 2,000 fragments of 50,000 bps. A number of these fragments were randomly set as either neutral or non-neutral, based on the probability $P_{\mathrm{R}}$. For all model parameters, values of each simulation were sampled from a log-uniform distribution with range: 1 to 2,000 for $N_\mathrm{0}$ and $N$, $10^{-10}$ to $10^{-6}$ for $\mu$, $5\times 10^{-10}$ to $5\times 10^{-7}$ for $r$, $10^{-5}$ to 1 for $P_{\mathrm{B}}$, and $10^{-3}$ to 1 for $\gamma$. Furthermore, uniform distribution with range 0 to 1 for $P_{\mathrm{R}}$ (Figure~S1 shows the prior distribution for all model parameters and latent values).
 
 The raw reference table produced by the pipeline was processed to remove missing data. Missing data were present in several summary statistics of simulations with low genetic diversity, that can be produced, for example, by low mutation rate, small population size, selection, or the combination of these parameters. Missing data were also present in the entire row of a simulation if the combination of population size, mutation, and especially recombination rate produced simulations that were memory intense, which caused the simulation to crash. A final reference table containing 55,634 simulations with 405 summary statistics was used to train the ABC-RFs. Independent RFs were obtained for each parameter and latent variable using R package \texttt{abcrf} \citep{Pudlo:2016il, Raynal:2019jj}. Each RF was obtained by growing 1,000 trees. The RFs were grown with the default parameters. Average genetic load, $L$ and $P$ were logit-transformed prior to the training. For these latent variables and for $\bar{s}$, simulations with $L=0$, $P=0$ or $\bar{s} = 0$ were also excluded from the training set, which reduced it to 36,026 simulations for $L$, and with 29,264 simulations for $P$ and $\bar{s}$. For the other parameters and latent variables, we performed log transformation prior to training and use the reference table containing all simulations.
 
@@ -182,19 +180,20 @@ The genome was divided into 5,000 fragments of 50,000 bps. These fragments were 
 (see Table~\ref{tab:feralbees} for the number of simulations of each reference table). 
 
 \begin{table}[!ht]
+\small
  \caption{\textbf{Populations and number of simulations in the reference table.}}
   \centering
   \begin{tabular}{lccc}
    \cmidrule(r){1-4}
-    Location                                                  &Date      &Sample Size   &Simulations \\
+    Location                                                  &Date      &Sample Sizes   &Simulations \\
     \midrule               
-    \textbf{Avalon}, Catalina Island, Los Angeles county      &1910/2014 &2,5 &13,953      \\ 
-    Blue Lake and Arcata, \textbf{Humboldt} county            &1966/2015 &6,6 &14,216      \\ 
-    \textbf{Placerita} Canyon Nature Area, Los Angeles county &1999/2014 &5,6 &14,125      \\ 
-    Idyllwild and Sky Valey, \textbf{Riverside} county        &1999/2014 &2,8 &13,930      \\ 
-    La Grange, \textbf{Stanislaus} county                     &1976/2014 &2,6 &13,956      \\ 
-    \textbf{Stebbins} Cold Canyon Reserve, Los Angeles county &1996/2014 &5,5 &14,121      \\ 
-    UC \textbf{Davis} Campus, Yolo county                     &1968/2015 &2,6 &13,970      \\ 
+    \textbf{Avalon}, Catalina Island, Los Angeles county      &1910/2014 &2/5 &13,953      \\ 
+    Blue Lake and Arcata, \textbf{Humboldt} county            &1966/2015 &6/6 &14,216      \\ 
+    \textbf{Placerita} Canyon Nature Area, Los Angeles county &1999/2014 &5/6 &14,125      \\ 
+    Idyllwild and Sky Valey, \textbf{Riverside} county        &1999/2014 &2/8 &13,930      \\ 
+    La Grange, \textbf{Stanislaus} county                     &1976/2014 &2/6 &13,956      \\ 
+    \textbf{Stebbins} Cold Canyon Reserve, Los Angeles county &1996/2014 &5/5 &14,121      \\ 
+    UC \textbf{Davis} Campus, Yolo county                     &1968/2015 &2/6 &13,970      \\ 
     \bottomrule
   \end{tabular}
   \begin{tablenotes}
@@ -204,6 +203,8 @@ The genome was divided into 5,000 fragments of 50,000 bps. These fragments were 
   \end{tablenotes}
   \label{tab:feralbees}
 \end{table}
+
+
 
 \section*{Results}
 
