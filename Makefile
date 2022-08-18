@@ -12,3 +12,4 @@ clean:
 	rm -f *.blg *.bbl
 	rm -f *.log
 	rm -f *.out
+	rm -f *.bak

@@ -1,6 +1,6 @@
 all: supplement.pdf
 
-supplement.pdf: supplement.tex ./references.bib
+supplement.pdf: supplement.tex ../references.bib
 	xelatex supplement.tex
 	bibtex supplement
 	xelatex supplement.tex
@@ -13,3 +13,4 @@ clean:
 	rm -f *.log
 	rm -f *.out
 	rm -f *.synctex.gz
+	rm -f *.bak
