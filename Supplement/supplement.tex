@@ -148,28 +148,31 @@ Three groups of summary statistics were calculated for the reference table (\tex
 
 \subsection*{S3.1 ABC-RF}
 
-Figure~\ref{fig:supple_pods_priors} shows the prior distribution of the parameters and latent variables that were estimated with the ABC-RF. These distributions correspond to the values that were used to train ABC-Random forests. 
+Figure~\ref{fig:supple_pods_priors} shows the prior distribution of the parameters and latent variables estimated with the ABC-RF. These distributions correspond to the values that were used to train ABC-Random forests.\\
 
-Figure~\ref{fig:supple_oob_sel} shows the distribution of Random Forest OOB estimates on the observed values (the ones used to train the RF) for model parameters and other latent variables informative about selection. The ABC-RF regressions performed poorly on the inference of two parameters of the selection dynamics $P_{\mathrm{R}}P_{\mathrm{B}}$ and $\gamma$. On the other hand, the ABC-RF performed better on the latent variables $P$, and $\bar{s}$ (which can be viewed as the realization of the two aforementioned parameters). Each value of these latent variables was obtained from the simulation by 1) calculating the relative proportion of strongly beneficial mutations (those with $s > 1/N_{\mathrm{e}}$) over all segregating mutations, 2) averaging their $s$ values. 
-The estimation of substitution load $L$ had also somehow good performance. It performed well for higher values but poorly for lower values, as we can see in the distribution of the estimated OOB values against the true values (Figure~\ref{fig:supple_oob_sel} e). It seems that only strong adaptive dynamics (many loci under selection or strong selection) leaves a polymoprhism patterns that are informative about substitution load. The proportion of strongly beneficial mutations that segregated in the population, $P$ can also be used as a complementary estimator to characterize the adaptive dynamics (it is complementary to $\theta_{\mathrm{b}}$ presented in the main text). 
+Figure~\ref{fig:supple_oob_sel} shows the distribution of Random Forest OOB estimates on the observed values (the ones used to train the RF) for model parameters and other latent variables informative about selection. The ABC-RF regressions performed poorly on the inference of two parameters of the selection dynamics $P_{\mathrm{R}}P_{\mathrm{B}}$ and $\gamma$. On the other hand, the ABC-RF performed better on the latent variables $P$ and $\bar{s}$ (which can be viewed as the realization of the two parameters mentioned above). Each value of these latent variables was obtained from the simulation by 1) calculating the relative proportion of strongly beneficial mutations (those with $s > 1/N_{\mathrm{e}}$) over all possible segregating mutations, 2) averaging their $s$ values.\\
 
-Figure~\ref{fig:supple_oob_demo} also presents the distribution OOB estimates with the true observed values for model parameters and for the latent variables informative about drift. For these model parameters, ABC-RF could not satisfactory recover the recombination rate $r$ as expected given the summary statistics calculated and the information contained in the temporal allele frequency dynamics. On the other hand, the ABC-RF estimated the mutation rate per nucleotide position per generation $\mu$, satisfactorily. The last latent variable also performed relatively well and similarly to the $L$, and could be used in combination with other estimates to characterize the selection/drift dynamics, when selection is more frequent. 
+The estimation of substitution load $L$ also had a somehow good performance. It performed well for higher values but poorly for lower ones, as shown in the distribution of the estimated OOB values against the true values (Figure~\ref{fig:supple_oob_sel} e). It seems that only strong adaptive dynamics (many loci under selection or strong selection) leave informative polymorphism patterns about substitution load. The proportion of strongly beneficial mutations that were segregating in the population, $P$, can also be used as a complementary estimator to characterize the adaptive dynamics (it is complementary to $\theta_{\mathrm{b}}$ presented in the main text).\\
 
-Figure~\ref{fig:supple_pods_varplots_sel} and Figure~\ref{fig:supple_pods_varplots_demo} show the variable importance plots (VIP) of each ABC-RF that were grown to infer the parameters of our ABC-RF framework. In a nutshell, the VIP shows how many times a summary statistics was selected by the RF during the training phase. Consequently, the VIP shows the relative importance of each summary statistics for the training of that parameter (more details in the main text). For the latent variables that account for the selection and drift dynamics, the top summary statistics were those calculated from the genome-wide distribution of locus-specific summary statistics that reflect their genome-wide distribution - variance, mean, skewness, kurtosis and quantiles. For example, for the latent variables $P$ and $\bar{s}$, RF used more frequently summary statistics informative about the distribution of locus-specific heterozygosity calculated globally and calculated for the second sample, and summary statistics that inform about the distribution of genome-wide intra-locus $F_{\mathrm{ST}}$. For $L$ summary statistics informative about the genetic divergence between samples: $F_{\mathrm{ST}}$, Da and Dj were more frequently selected. 
+Figure~\ref{fig:supple_oob_demo} also presents the distribution OOB estimates with the true observed values for model parameters and the latent variables informative about drift. For these model parameters, ABC-RF could not satisfactorily recover the recombination rate $r$ as expected, given the calculated summary statistics and the information contained in the temporal allele frequency dynamics. On the other hand, the ABC-RF estimated the mutation rate per nucleotide position per generation $\mu$ satisfactorily. The last latent variable also performed relatively well and similarly to the $L$. It could be used with other estimates to characterize the selection/drift dynamics when selection is more frequent.\\
 
-To test the robustness of our ABC-RF based framework, we applied the trained RFs on PODs with across-genome varying recombination rates. The scatterplots showed a similar dispersion pattern as the OOB plots when the true values were plotted against the estimated values (Figure~\ref{fig:supple_pods_variable_recomb}). Quantitatively, these PODs presented similar behavior regarding the MSE and $R^2$ estimates (Figure~\ref{fig:supple_pods_variable_recomb}, and Table~\ref{tab:supple_neutral_mse}).
+To test the robustness of our ABC-RF-based framework, we applied the trained RFs on PODs with across-genome varying recombination rates. Figure~\ref{fig:supple_example_recomb} depicts how recombination rates were set on simulations. Simulations for ABC-RF training had fixed genome-wide recombination rates per generation $r$; Additional 1,000 simulations for testing the framework's robustness had varying recombination rates.
+The scatterplots showed a similar dispersion pattern as the OOB plots when the true values were plotted against the estimated values (Figure~\ref{fig:supple_pods_variable_recomb}). Quantitatively, these PODs presented similar behavior regarding the MSE and $R^2$ estimates (Figure~\ref{fig:supple_pods_variable_recomb}, and Table~\ref{tab:supple_neutral_mse}).\\
+
+Table~\ref{tab:supple_neutral_mse} contains MSE and bias for $P$, $\bar{s}$, and $L$ from neutral simulations. For training simulations (for model proof of concept and analysis of the feral bee populations), we first removed neutral simulations for these parameters (where values were zero) before RF training. Then each trained RF was used to make predictions on these neutral simulations. The MSE and bias correspond to the difference between the true values (zeros) and the predicted values in the original scale. For simulations used to test the robustness of our framework when there are varying rates of recombination, we calculated MSE and $R^2$ for non-neutral PODs (Figure~\ref{fig:supple_pods_variable_recomb}) and MSE and bias for neutral PODs.\\
+
+Figure~\ref{fig:supple_pods_varplots_sel} and Figure~\ref{fig:supple_pods_varplots_demo} show the variable importance plots (VIP) of each ABC-RF that were grown to infer the parameters of our ABC-RF framework. In a nutshell, the VIP shows how many times the RF selected summary statistics during the training phase. Consequently, the VIP shows the relative importance of each summary statistic for training that parameter (more details in the main text). For the latent variables that account for the selection and drift dynamics, the top summary statistics were those calculated from the genome-wide distribution of locus-specific summary statistics that reflect their genome-wide distribution - variance, mean, skewness, kurtosis, and quantiles. RF frequently used summary statistics that inform about the distribution of locus-specific heterozygosity, calculated globally and calculated for the second sample. And also, summary statistics informative about the distribution of genome-wide intra-locus $F_{\mathrm{ST}}$, for the latent variables $P$ and $\bar{s}$. For $L$ summary statistics informative about the genetic divergence between samples: $F_{\mathrm{ST}}$, Da and Dj were more frequently selected.\\
 
 \subsection*{S3.3 Analysis of temporal genomic data of feral populations of \textit{Apis mellifera}}
 
-Before we trained the RF for the analysis of feral bee populations, we checked if our model would fit the data, as an indication of if the model was able to capture most of the features of the observed genomic data. To do that, for each population reference table containing only the summary statistics from the simulated data, we run a principal component analysis (PCA). We also run a PCA on the observed (or targeted) dataset summary statistics and projected its principal components on the PC computed with simulated data. The model mostly capture features of the data, however some PCs showed the observed data point (in black) far from the simulated data cloud of points (in grey), indicating some model inadequacies possibly due to the fact that we did not include gene flow and/or admixture in our simulations (Figure~\ref{fig:supple_model_check_avalon}, Figure~\ref{fig:supple_model_check_humboldt}, Figure~\ref{fig:supple_model_check_davis}, Figure~\ref{fig:supple_model_check_stanislaus}, Figure~\ref{fig:supple_model_check_stebbins}, Figure~\ref{fig:supple_model_check_riverside}, Figure~\ref{fig:supple_model_check_placerita}). 
+Before we trained the RF to analyze feral bee populations, we checked if our model could capture most of the features of the observed genomic data (target dataset). We run a principal component analysis (PCA) and projected pairs of principal components (PC) on a PCA plot for each population reference table containing only the summary statistics from the simulated data. We also ran a PCA on the observed (or target) dataset summary statistics and projected the same PCs on the PCA plot computed with simulated data. The model mostly capture features of the data, however some PCs showed the observed data point (in black) far from the simulated data cloud of points (in grey), indicating some model inadequacies possibly due to the fact that we did not include gene flow and/or admixture in our simulations (Figure~\ref{fig:supple_model_check_avalon}, Figure~\ref{fig:supple_model_check_humboldt}, Figure~\ref{fig:supple_model_check_davis}, Figure~\ref{fig:supple_model_check_stanislaus}, Figure~\ref{fig:supple_model_check_stebbins}, Figure~\ref{fig:supple_model_check_riverside}, Figure~\ref{fig:supple_model_check_placerita}).\\
 
-Figure~\ref{fig:supple_feralbee_thetab}, Figure~\ref{fig:supple_feralbee_N}, and Figure~\ref{fig:supple_feralbee_NE} show the distribution of the true and the OOB estimated values for the parameters used in this work for the joint inference of demography and selection for temporal pairs of populations of feral \textit{A. mellifera}. The OOB MSE and $R^2$ estimates showed that even with fewer simulations for model training, the RF grew for the  \textit{A. mellifera} data had comparable performance to the RF grew for the simulated data.
+Figure~\ref{fig:supple_feralbee_thetab}, Figure~\ref{fig:supple_feralbee_N}, and Figure~\ref{fig:supple_feralbee_NE} show the distribution of the true and the OOB estimated values for the parameters used in this work for the joint inference of demography and selection for temporal pairs of populations of feral \textit{A. mellifera}. The OOB MSE and $R^2$ estimates showed that even with fewer simulations for model training, the RF grew for the \textit{A. mellifera} data had comparable performance to the RF grew for the simulated data.\\
 
-The performance of the model parameters and additional latent variables for all temporal pairs of this dataset also were similar to the simulations used for the framework evaluation. Figure~\ref{fig:supple_feralbee_prpb}, Figure~\ref{fig:supple_feralbee_pstrong}, Figure~\ref{fig:supple_feralbee_gammamean}, Figure~\ref{fig:supple_feralbee_gammaselmean}, and Figure~\ref{fig:supple_feralbee_load} show the parameters and latent variables informative about the adaptive history. Figure~\ref{fig:supple_feralbee_mu}, Figure~\ref{fig:supple_feralbee_r}, and Figure~\ref{fig:supple_feralbee_nen} show the model parameters and an additional latent variable complementary to the mutation load for the inference of the selection impact on demography. For comparison purposes, we also included the scatterplots of true $N_{\mathrm{e}}$ against the $F_{\mathrm{ST}}$-NE computed on the global $F_{\mathrm{ST}}$ of simulated data for all feral bee populations (Figure~\ref{fig:supple_feralbee_fstne}.
+The performance of the model parameters and additional latent variables for all temporal pairs of this dataset were similar to the simulations used for the framework evaluation. Figure~\ref{fig:supple_feralbee_prpb}, Figure~\ref{fig:supple_feralbee_pstrong}, Figure~\ref{fig:supple_feralbee_gammamean}, Figure~\ref{fig:supple_feralbee_gammaselmean}, and Figure~\ref{fig:supple_feralbee_load} show the parameters and latent variables informative about the adaptive history. Figure~\ref{fig:supple_feralbee_mu}, Figure~\ref{fig:supple_feralbee_r}, and Figure~\ref{fig:supple_feralbee_nen} show the model parameters and an additional latent variable complementary to the mutation load for the inference of the selection impact on demography. For comparison purposes, we also included the scatterplots of true $N_{\mathrm{e}}$ against the $F_{\mathrm{ST}}$-NE computed on the global $F_{\mathrm{ST}}$ of simulated data for all feral bee populations (Figure~\ref{fig:supple_feralbee_fstne}).\\
 
-Table~\ref{tab:supple_neutral_mse} contains MSE and bias for $P$, $\bar{s}$, and $L$ from neutral simulations. For training simulations (for model proof of concept and analysis of the feral bee populations), we first removed neutral simulations for these parameters (where values were zero) before RF training. Then each trained RF was used to make predictions on these neutral simulations. The MSE and bias correspond to the difference between the true values (zeros) and the predicted values in the original scale. For simulations used to test the robustness of our framework when there are varying rates of recombination, we calculated MSE and $R^2$ for non-neutral PODs (Figure~\ref{supple_pods_variable_recomb}), and  MSE and bias for neutral PODs
-
-Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each parameter for each \textit{A. mellifera} population. The last row shows the $F_{\mathrm{ST}}$-NE estimates for comparison. Figure~\ref{fig:supple_feralbee_densityselection} and Figure~\ref{fig:supple_feralbee_densitydemo} show the prior and posterior distributions of all remaining model parameters and latent variables calculated for the temporal samples analyzed with ABC-RF framework.\\
+%Table~\ref{tab:supple_bees_posteriors}
+Table S3 contains the posterior estimates of each parameter for each \textit{A. mellifera} population. The last row shows the $F_{\mathrm{ST}}$-NE estimates for comparison. Figure~\ref{fig:supple_feralbee_densityselection} and Figure~\ref{fig:supple_feralbee_densitydemo} show the prior, and posterior distributions of all remaining model parameters and latent variables calculated for the temporal samples analyzed with the ABC-RF framework.\\
 
 % Supplementary Table 2 - MSE and BIAS for neutral/near-neutral simulations
 % Please add the following required packages to your document preamble:
@@ -215,6 +218,7 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \end{tabular}
 \label{tab:supple_neutral_mse}
 \end{table}
+\newpage
 
 % Supplementary Table  3 - Posterior estimates parameter/population.
  \begin{sidewaystable}[!ht]
@@ -253,24 +257,24 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
         $F_{\mathrm{ST}}$-NE & 8.00E+01 & 1.13E+02 & 3.62E+01 & 2.28E+01 & 3.60E+01 & 1.47E+01 & 6.15E+01 \\
          & (0.00E+00 – 7.80E+02) & (5.30E+00 – 5.88E+17) & (8.63E+00 – 3.59E+02) & (6.00E+00 – 3.42E+02) & (5.63E+00 – 2.25E+02) & (1.79E+00 – 1.20E+02) & (4.46E+00 – 6.12E+02) \\
           \bottomrule
-    \multicolumn{8}{l}{\tiny  Estimates are in the natural scale.} \\
+    \multicolumn{8}{l}{\tiny  Estimates are in the original scale.} \\
     \end{tabular}
 \label{tab:supple_bees_posteriors}
 \end{tiny}
 \end{sidewaystable}
 
-\newpage
+%\newpage
 \bibliographystyle{apalike}
 \bibliography{references}
 
-% Add all supplementary figure here:
+% Add all supplementary figures here:
 \newpage
 
 % Figure Supplementary 1 - Prior distribution of the PODs
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.85\textwidth]{Figures/FigureS1_parameters_histograms.pdf}
-  \small\caption{\textbf{Prior distribution of the simulation parameters, latent variables informative about the adaptive history and demography inferred with the ABC-RF.} (a) the per site mutation rate $\mu$, (b)  per base recombination rate per generation $r$, (c) the population size $N$, (d) the probability of beneficial mutation $P_RP_B$, (e) mean of the gamma distribution $\gamma$, (f) the proportion of strongly selected mutations $P$, (g) average selection coefficients of mutations under strong selection $\bar{s}$, (h) the scale mutation rate of beneficial mutations $\theta_{\mathrm{b}}$, (i) the average substitution load $L$, (j) the effective population size $N_{\mathrm{e}}$, (k) the distance between the effective size and population size expressed in the ratio $N_{\mathrm{e}}/N$.}
+  \small\caption{\textbf{Prior distribution of the simulation parameters, latent variables informative about the adaptive history and demography inferred with the ABC-RF.} (a) the per-site mutation rate $\mu$, (b)  per base recombination rate per generation $r$, (c) the population size $N$, (d) the probability of beneficial mutation $P_RP_B$, (e) mean of the gamma distribution $\gamma$, (f) the proportion of strongly selected mutations $P$, (g) average selection coefficients of mutations under strong selection $\bar{s}$, (h) the scale mutation rate of beneficial mutations $\theta_{\mathrm{b}}$, (i) the average substitution load $L$, (j) the effective population size $N_{\mathrm{e}}$, (k) the distance between the effective size and population size expressed in the ratio $N_{\mathrm{e}}/N$.}
   \label{fig:supple_pods_priors}
 \end{figure}
 
@@ -278,7 +282,7 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=1\textwidth]{Figures/FigureS2_oob_plots_selection.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of model parameters informative about the number of beneficial mutations and their strength, the latent variables associated with these two parameters, and variables informative about the adaptive dynamic.} (a) probability of a beneficial mutation to arise $P_RP_B$; (b) number of mutations under strong selection $P$; (c)  mean of the gamma distribution $\gamma$; (d) mean of selection coefficients of mutations under strong selection $\bar{s}$; and (e) mean substitution load $L$. The barplots on the left side of the scatterplots of $P$, $\bar{s}$, and $L$ correspond to the posterior estimates obtained for the simulations removed for the training of these parameters, as these simulations had zero as true values. MSE and $R^2$ estimates of b, d, and e corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of model parameters informative about the number of beneficial mutations and their strength, the latent variables associated with these two parameters, and variables informative about the adaptive dynamic.} (a) probability of a beneficial mutation to arise $P_RP_B$; (b) number of mutations under strong selection $P$; (c)  mean of the gamma distribution $\gamma$; (d) mean of selection coefficients of mutations under strong selection $\bar{s}$; and (e) mean substitution load $L$. The bar plots on the left side of the scatterplots of $P$, $\bar{s}$, and $L$ correspond to the posterior estimates obtained for the simulations removed for the training of these parameters, as these simulations had zero as true values. MSE and $R^2$ estimates of b, d, and e corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_oob_sel}
 \end{figure}
 
@@ -286,185 +290,193 @@ Table~\ref{tab:supple_bees_posteriors} contains the posterior estimates of each 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=1\textwidth]{Figures/FigureS3_oob_plots_demography.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of model parameters and latent variables informative about demography.} (a) mutation rate per generation $\mu$; (b) per base recombination rate per generation $r$; and (c) the ratio between the effective size and the population census size $N_{\mathrm{e}}/N$.}\label{fig:supple_oob_demo}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the model parameters and latent variables informative about demography.} (a) mutation rate per generation $\mu$; (b) per base recombination rate per generation $r$; and (c) the ratio between the effective size and the population census size $N_{\mathrm{e}}/N$.}\label{fig:supple_oob_demo}
 \end{figure}
 
-% Figure Supplementary 4 - Variable importance plots - PODs selection parameters
+% Figure Supplementary 4 [NEW] - Example of recombination rates
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS4_varplot_selection.pdf}
+  \includegraphics[width=1\textwidth]{Figures/FigureS4_example_variable_recomb.pdf}
+  \small\caption{\textbf{How the recombination rate per base pair per generation $r$ varies across the genome.} Simulation for model training had constant $r$ (horizontal line in dark blue). Simulations used to test the ABC-RF robustness to heterogenous recombination rates could have different values of $r$ for the recombination map. This figure depicts one example of genome-wide $r$ for each type of simulation.}
+  \label{fig:supple_example_recomb}
+\end{figure}
+
+% Figure Supplementary 5 - Expected vs Predicted for simulations with variable recombination rate
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS5_posterior_plots_recombination.pdf}
+  \small\caption{\textbf{Expected versus posterior estimates plots for PODs with variable genome-wide recombination rates.} (a) $\theta_{\mathrm{b}}$, (b) $N$, (c) $N_{\mathrm{e}}$, (d) $F_{\mathrm{ST}}-N_{\mathrm{e}}$, (e) $P_RP_B$, (f) $P$, (g) $\gamma$, (h) $\bar{s}$, (i) $L$, (j) $\mu$, (k) $r$, and (l) $N_{\mathrm{e}}/N$. MSE and $R^2$ estimates of f, h, and i corresponded to non-neutral PODs. See Table S2, Supplementary results, for neutral PODs MSE and bias.}
+  \label{fig:supple_pods_variable_recomb}
+\end{figure}
+
+% Figure Supplementary 6 - Variable importance plots - PODs selection parameters
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS6_varplot_selection.pdf}
   \small\caption{\textbf{Variable importance plots of the trained ABC-RF for parameters informative about the adaptive history.} (a) The probability of beneficial mutation $P_RP_B$, (b) the proportion of strongly selected mutations $P$, (c) mean of the gamma distribution $\gamma$, (d) average selection coefficients of mutations under strong selection $\bar{s}$, (e) the scale mutation rate of selected mutations $\theta_{\mathrm{b}}$, and (f) the average substitution load $L$.}
   \label{fig:supple_pods_varplots_sel}
 \end{figure}
 
-% Figure Supplementary 5 - Variable importance plots - PODs demography parameters
+% Figure Supplementary 7 - Variable importance plots - PODs demography parameters
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS5_varplot_demography.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS7_varplot_demography.pdf}
   \small\caption{\textbf{Variable importance plots of the trained ABC-RF for parameters informative about the adaptive history.} (a) the per site mutation rate $\mu$, (b) per base recombination rate per generation $r$, (c) the population size $N$, (d) the effective population size $N_{\mathrm{e}}$, (e) the distance between the effective size and population size expressed in the ratio $N_{\mathrm{e}}/N$.}
   \label{fig:supple_pods_varplots_demo}
 \end{figure}
 
-% Figure Supplementary 6 - Expected vs Predicted for simulations with variable recombination rate
+% Figures Supplementary 8 to 14 Model check PCA.
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS6_posterior_plots_recombination.pdf}
-  \small\caption{\textbf{Expected versus posterior estimates plots for PODs with variable genome-wide recombination rates.} (a) $\theta_{\mathrm{b}}$, (b) $N$, (c) $N_{\mathrm{e}}$, (d) $F_{\mathrm{ST}}-N_{\mathrm{e}}$, (e) $P_RP_B$, (f) $P$, (g) $\gamma$, (h) $\bar{s}$, (i) $L$, (j) $\mu$, (k) $r$, and (l) $N_{\mathrm{e}}/N$. MSE and $R^2$ estimates of f, h and i corresponded to non-neutral PODs. See Table S2, Supplementary results, for neutral PODs MSE and bias.}
-  \label{fig:supple_pods_variable_recomb}
-\end{figure}
-
-% Figures Supplementary 7 to 13 Model check PCA.
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS7_model_check_Avalon.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS8_model_check_Avalon.pdf}
   \small\caption{\textbf{Prior evaluation for the Avalon population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_avalon}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS8_model_check_Humboldt.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS9_model_check_Humboldt.pdf}
   \small\caption{\textbf{Prior evaluation for the Humboldt population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_humboldt}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS9_model_check_Davis.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS10_model_check_Davis.pdf}
   \small\caption{\textbf{Prior evaluation for the Davis population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_davis}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS10_model_check_Stanislaus.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS11_model_check_Stanislaus.pdf}
   \small\caption{\textbf{Prior evaluation for the Stanislaus population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_stanislaus}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS11_model_check_Stebbins.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS12_model_check_Stebbins.pdf}
   \small\caption{\textbf{Prior evaluation for the Stebbins population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_stebbins}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS12_model_check_Riverside.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS13_model_check_Riverside.pdf}
   \small\caption{\textbf{Prior evaluation for the Riverside population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_riverside}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS13_model_check_Placerita.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS14_model_check_Placerita.pdf}
   \small\caption{\textbf{Prior evaluation for the Placerita population.} Projection of the targeted population principal components, computed from the summary statistics, into the cloud of the simulated data points obtained with principal component analysis (PCA). We see the targeted data point (in black) into the simulated data cloud of points (in grey) if the model captured most of the targeted data features.}
   \label{fig:supple_model_check_placerita}
 \end{figure}
 
-% Figure Supplementary 6, 7 and 8 - Feral Bees OOB plots << demography and selection >>
+% Figure Supplementary 15, 16, and 17 - Feral Bees OOB plots << demography and selection >>
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS14_combined_plot_ne.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the population effective size $N_{\mathrm{e}}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS15_combined_plot_ne.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the population effective size $N_{\mathrm{e}}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_NE}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS15_combined_plot_nc.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the population census size $N$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS16_combined_plot_nc.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the population census size $N$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_N}
 \end{figure}
 
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS16_combined_plot_thetab.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the scaled mutation rate of beneficial mutations $\theta_{b}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS17_combined_plot_thetab.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the scaled mutation rate of beneficial mutations $\theta_{b}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_thetab}
 \end{figure}
 
 
-% Figure Supplementary 17 to 21 - Feral Bees OOB plots << selection extra >>
+% Figure Supplementary 18 to 22 - Feral Bees OOB plots << selection extra >>
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS17_combined_plot_prps.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the probability of beneficial mutation $P_RP_B$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS18_combined_plot_prps.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the probability of beneficial mutation $P_RP_B$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_prpb}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS18_combined_plot_pstrong.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the proportion of strongly selected mutations $P$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $P = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS19_combined_plot_pstrong.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the proportion of strongly selected mutations $P$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $P = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_feralbee_pstrong}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS19_combined_plot_gamma.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the mean of the gamma distribution $\gamma$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS20_combined_plot_gamma.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the mean of the gamma distribution $\gamma$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_gammamean}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS20_combined_plot_gammasel.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the average selection coefficients of mutations under strong selection $\bar{s}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $\bar{s} = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS21_combined_plot_gammasel.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the average selection coefficients of mutations under strong selection $\bar{s}$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $\bar{s} = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_feralbee_gammaselmean}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS21_combined_plot_load.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the prediction of the mean substitution load $L$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $L = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS22_combined_plot_load.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the mean substitution load $L$ for pairs of temporal samples of \textit{A. mellifera} feral populations.} Stacked points on the far left of each scatter-plot correspond to posterior estimates of neutral simulations, where $L = 0$. MSE and $R^2$ estimates corresponded to non-neutral simulations. See Table S2, Supplementary results, for neutral simulations MSE and bias.}
   \label{fig:supple_feralbee_load}
 \end{figure}
 
-% Figure Supplementary 22 to 24 - Feral Bees OOB plots << demography extra >>
+% Figure Supplementary 23 to 25 - Feral Bees OOB plots << demography extra >>
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS22_combined_plot_mu.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS23_combined_plot_mu.pdf}
   \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the mutation rate per generation $\mu$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_mu}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS23_combined_plot_rr.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the per base recombination rate per generation $r$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS24_combined_plot_rr.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the per base recombination rate per generation $r$ for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_r}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS24_combined_plot_nenc.pdf}
-  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for the the ratio between the effective size and the population census size for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS25_combined_plot_nenc.pdf}
+  \small\caption{\textbf{Out-of-bag estimates of ABC-RF trained for predicting the ratio between the effective size and the population census size for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_nen}
 \end{figure}
 
-% Figure Supplementary 25 NE Expected versus FST-NE prediction of Feral Bee populations.
+% Figure Supplementary 26 NE Expected versus FST-NE prediction of Feral Bee populations.
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS25_combined_plot_fstNE.pdf}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS26_combined_plot_fstNE.pdf}
   \small\caption{\textbf{$\hat N_{\mathrm{e}}$ estimates from the temporal $F_{\mathrm{ST}}$ to compare with the ABC-RF -based $\hat N_{\mathrm{e}}$ estimates for pairs of temporal samples of \textit{A. mellifera} feral populations.}}
   \label{fig:supple_feralbee_fstne}
 \end{figure}
 
-% Figure Supplementary 26 and 27 - Feral Bees Posterior density plots << selection and demography extra >>
+% Figure Supplementary 27 and 28 - Feral Bees Posterior density plots << selection and demography extra >>
 \begin{figure}[ht]
   \centering 
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS26_weighted_densityPlots_selection_feralbees.pdf}
-  \small\caption{\textbf{Posterior distributions of model parameters and a latent variable informative about selection for all feral \textit{A. mellifera} populations.} (a) probability of a beneficial mutation to arise $P_RP_B$; (b) number of mutations under strong selection $P$; (c)  mean of the gamma distribution $\gamma$; (d) mean of selection coefficients of mutations under strong selection $\bar{s}$; and (e) mean substitution load $L$. Dashed and filled lines corresponds to the prior and posterior distributions, respectively. See Table S3, Supplementary Results for mean estimates and 95\% credibility intervals.}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS27_weighted_densityPlots_selection_feralbees.pdf}
+  \small\caption{\textbf{Posterior distributions of model parameters and a latent variable informative about selection for all feral \textit{A. mellifera} populations.} (a) probability of a beneficial mutation to arise $P_RP_B$; (b) number of mutations under strong selection $P$; (c)  mean of the gamma distribution $\gamma$; (d) mean of selection coefficients of mutations under strong selection $\bar{s}$; and (e) mean substitution load $L$. Dashed and filled lines correspond to the prior and posterior distributions, respectively. See Table S3, Supplementary Results for mean estimates and 95\% credibility intervals.}
   \label{fig:supple_feralbee_densityselection}
 \end{figure}
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=0.95\textwidth]{Figures/FigureS27_weighted_densityPlots_demography_feralbees.pdf}
-  \small\caption{\textbf{Posterior distributions of model parameters and a latent variable informative about demography for all feral \textit{A. mellifera} populations.} (a) mutation rate per generation $\mu$; (b) per base recombination rate per generation $r$; and (c) the ratio between the effective size and the population census size $N_{\mathrm{e}}/N$. Dashed and filled lines corresponds to the prior and posterior distributions, respectively. See Table S3, Supplementary Results for mean estimates and 95\% credibility intervals.}
+  \includegraphics[width=0.95\textwidth]{Figures/FigureS28_weighted_densityPlots_demography_feralbees.pdf}
+  \small\caption{\textbf{Posterior distributions of model parameters and a latent variable informative about demography for all feral \textit{A. mellifera} populations.} (a) mutation rate per generation $\mu$; (b) per base recombination rate per generation $r$; and (c) the ratio between the effective size and the population census size $N_{\mathrm{e}}/N$. Dashed and filled lines correspond to the prior and posterior distributions, respectively. See Table S3, Supplementary Results for mean estimates and 95\% credibility intervals.}
   \label{fig:supple_feralbee_densitydemo}
 \end{figure}
 
