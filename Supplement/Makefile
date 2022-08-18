@@ -5,6 +5,7 @@ supplement.pdf: supplement.tex ../references.bib
 	bibtex supplement
 	xelatex supplement.tex
 	xelatex supplement.tex
+	xelatex supplement.tex
 
 clean:
 	#rm -f *.pdf
